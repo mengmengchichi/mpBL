@@ -1,0 +1,69 @@
+<!--pages/activity/activity.wxml-->
+<view class="weui-search-bar">
+  <view class="weui-search-bar__form">
+      <view class="weui-search-bar__box">
+          <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+          <input type="text" class="weui-search-bar__input" placeholder="展览演出、嘉宾、城市" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" />
+          <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+              <icon type="clear" size="14"></icon>
+          </view>
+      </view>
+      <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+          <icon class="weui-icon-search" type="search" size="14"></icon>
+          <view class="weui-search-bar__text">展览演出、嘉宾、城市</view>
+      </label>
+  </view>
+</view>
+
+<swiper
+indicator-dots="true"
+indicator-color="#ccc"
+indicator-active-color="#fff"
+>
+  <block wx:for="{{imgUrls}}" wx:key="{{index}}">
+    <swiper-item>
+      <image src="{{item}}" class="slide-image" width="355" height="150"/>
+    </swiper-item>
+  </block>
+</swiper>
+
+<view class='select'>
+  <view class='select-city'>
+    <view class='select-wrap'>全国<text class='select-icon'></text></view>
+  </view>
+  <view class='select-type'>
+    <view class='select-wrap'>全部类型<text class='select-icon'></text></view>
+  </view>
+  <view class='select-time'>
+    <view class='select-wrap'>全部时间<text class='select-icon'></text></view>
+  </view>
+</view>
+
+<view class='product-wrap'>
+  <view class='product-list'>
+    <view class='product-item'>
+      <view class='product-item-img'>
+        <image data-v-432cb602="" src="//i1.hdslb.com/bfs/openplatform/201808/imrkNIxUN096g.jpeg@180w_240h.jpg" alt="石家庄NCE动漫嘉年华">
+        </image>
+      </view>
+      <view class='product-item-info'>
+        <view class='item-info-header'>
+          <text class='info-name'>石家庄NCE动漫嘉年华</text>
+          <text class='info-address'>2018.11.11  石家庄市  石家庄解放广场</text>
+          <text class='Collage'>拼团</text>
+        </view>
+        <view class='item-info-time'>
+          <view class='item-price'>
+            <text>￥</text>
+            <text class='item-price-bold'>36</text>
+            <text>起</text>
+          </view>
+          <text class='item-time'>6天后开展</text>
+          <text class='item-liked'>1252人想去</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+
