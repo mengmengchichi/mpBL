@@ -1,0 +1,30 @@
+<!--components/city/city.wxml-->
+<scroll-view class='city-select-wrap' scroll-y>
+  <view class='city-list-wrap'>
+    <view class='city-container'>
+      <view class='all-city' catchtap='console'>全部</view>
+      <view class='whole-citys'>
+        <view class='whole-city-item'>全国</view>
+        <view class='whole-city-item'>海外</view>
+      </view>
+      <view class='hot-city'>热门</view>
+      <view class='hot-city-list'>
+        <!-- <view>{{citys}}</view> -->
+        <view class="host-city-item" wx:for="{{citys.hot}}" data-id="{{item.id}}" wx:key="{{item.id}}">{{item.name}}</view>
+      </view>
+      <view class='city-list'>
+        <view class='city-item' wx:for="{{citys.list}}" wx:key="{{item.letter}}">
+          <view class='city-initials'>{{item.letter}}</view>
+          <view class='city-group'>
+            <view class='city-group-item' wx:for="{{item.city_list}}" wx:key="item.id" data-id="{{item.id}}">{{item.name}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class='to-city-group'>
+    <view>全部</view>
+    <view>热门</view>
+    <view wx:for="{{citys.list}}" wx:key="item.letter">{{item.letter}}</view>
+  </view>
+</scroll-view>

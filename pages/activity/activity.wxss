@@ -19,6 +19,10 @@
 .weui-search-bar__text{
   font-size: 12px;
 }
+.fixed{
+  position: fixed !important;
+  top: 0;
+}
 .select{
     position: relative;
     left: 0;
@@ -51,6 +55,13 @@
   -webkit-transform: scale(.5);
   transform: scale(.5);
 }
+.active .select-wrap{
+  color: #ff5687;
+}
+.active .select-icon{
+  transform: rotate(180deg);
+  border-top-color: #ff5687;
+}
 .select-icon{
     display: inline-block;
     top: 0;
@@ -76,6 +87,7 @@
     display: flex;
     flex-direction: row;
     align-items: stretch;
+    padding-bottom: 28px;
 }
 
 .product-item-img{
@@ -135,14 +147,14 @@
 }
 .item-info-time{
     font-size: 14px;
-    line-height: 57px;
-    flex: 1 0 20px;
+    flex: 0 0 20px;
     overflow: hidden;
     display: flex;
     justify-content: space-between;
 }
 .item-info-time>.item-price{
   color: #ff5687;
+  line-height: 20px;
 }
 .item-info-time>.item-price>.item-price-bold{
     font-size: 18px;

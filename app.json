@@ -2,13 +2,15 @@
   "pages":[
     "pages/activity/activity",
     "pages/collection/collection",
-    "pages/order/order"
+    "pages/order/order",
+    "pages/detail/detail"
   ],
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#ff5687",
     "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"white"
+    "navigationBarTextStyle":"white",
+    "enablePullDownRefresh": true
   },
   "tabBar": {
     "color": "#757575",

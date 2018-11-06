@@ -2,5 +2,8 @@
   "window": {
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "哔哩哔哩会员购"
+  },
+  "usingComponents": {
+    "city": "../../components/city/city"
   }
 }

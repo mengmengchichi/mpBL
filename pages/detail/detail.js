@@ -1,29 +1,18 @@
-// pages/collection/collection.js
-import ajax from "../../utils/ajax.js";
+// pages/detail/detail.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    collection: [],
-    hasCollection: false,
-    localId: []
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.setNavigationBarTitle({ "title": "收藏" });
-    ajax.get('https://show.bilibili.com/api/ticket/project/get?version=133&id=14505')
-      .then(res => {
-        console.log(res)
-        this.setData({
-          ...this.data,
-          collection: this.data.collection.concat(res.data.data)
-        })
-      })
+
   },
 
   /**

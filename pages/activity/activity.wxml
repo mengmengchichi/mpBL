@@ -1,5 +1,5 @@
 <!--pages/activity/activity.wxml-->
-<view class="weui-search-bar">
+<view class="weui-search-bar" wx:if="{{!isShowCity}}">
   <view class="weui-search-bar__form">
       <view class="weui-search-bar__box">
           <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
@@ -19,51 +19,56 @@
 indicator-dots="true"
 indicator-color="#ccc"
 indicator-active-color="#fff"
+circular
+wx:if="{{!isShowCity}}"
 >
-  <block wx:for="{{imgUrls}}" wx:key="{{index}}">
+  <block wx:for="{{banner}}" wx:key="{{item.id}}">
     <swiper-item>
-      <image src="{{item}}" class="slide-image" width="355" height="150"/>
+      <image src="{{item.pic}}" class="slide-image" width="355" height="150"/>
     </swiper-item>
   </block>
 </swiper>
 
-<view class='select'>
-  <view class='select-city'>
+<view class="{{selectionFixed}} select">
+  <view class='select-city {{active[0]}}' catchtap='selectCity' data-type="city">
     <view class='select-wrap'>全国<text class='select-icon'></text></view>
   </view>
-  <view class='select-type'>
+  <view class='select-type {{active[1]}}'>
     <view class='select-wrap'>全部类型<text class='select-icon'></text></view>
   </view>
-  <view class='select-time'>
+  <view class='select-time {{active[2]}}'>
     <view class='select-wrap'>全部时间<text class='select-icon'></text></view>
   </view>
 </view>
 
-<view class='product-wrap'>
+<city wx:if="{{isShowCity}}" citys="{{citys}}"></city>
+
+<view class='product-wrap' wx:if="{{!isShowCity}}">
   <view class='product-list'>
-    <view class='product-item'>
+    <view class='product-item' wx:for="{{list}}" wx:key="item.id" catchtap='toDetail' data-id='{{item.id}}'>
       <view class='product-item-img'>
-        <image data-v-432cb602="" src="//i1.hdslb.com/bfs/openplatform/201808/imrkNIxUN096g.jpeg@180w_240h.jpg" alt="石家庄NCE动漫嘉年华">
+        <image data-v-432cb602="" src="{{item.cover}}" alt="{{item.project_name}}">
         </image>
       </view>
       <view class='product-item-info'>
         <view class='item-info-header'>
-          <text class='info-name'>石家庄NCE动漫嘉年华</text>
-          <text class='info-address'>2018.11.11  石家庄市  石家庄解放广场</text>
-          <text class='Collage'>拼团</text>
+          <text class='info-name'>{{item.project_name}}</text>
+          <text class='info-address'>{{item.show_time}}  {{item.city}}  {{item.venue_name}}</text>
+          <text class='Collage' wx:if="{{item.promo}}">拼团</text>
         </view>
         <view class='item-info-time'>
           <view class='item-price'>
             <text>￥</text>
-            <text class='item-price-bold'>36</text>
+            <text class='item-price-bold'>{{item.price_low / 100}}</text>
             <text>起</text>
           </view>
-          <text class='item-time'>6天后开展</text>
-          <text class='item-liked'>1252人想去</text>
+          <text class='item-time' wx:if="{{item.countdown !== ''}}">{{item.countdown}}</text>
+          <text class='item-liked'>{{item.wish}}人想去</text>
         </view>
       </view>
     </view>
   </view>
 </view>
+
 
 

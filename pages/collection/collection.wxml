@@ -1,2 +1,37 @@
 <!--pages/collection/collection.wxml-->
-<text>pages/collection/collection.wxml</text>
+<view class='collection-none' wx:if="{{hasCollection}}">
+  <view class='image-none'></view>
+  <view>没有收藏内容，快去看看活动吧</view>
+</view>
+
+<view class='collection-wrap' wx:if="{{!isShowCity}}">
+  <view class='collection-list'>
+    <view class='collection-item' wx:for="{{collection}}" wx:key="item.id">
+      <view class='collection-item-img'>
+        <image data-v-432cb602="" src="{{item.cover}}" alt="{{item.project_name}}">
+        </image>
+      </view>
+      <view class='collection-item-info'>
+        <view class='item-info-header'>
+          <text class='info-name'>{{item.name}}</text>
+          <view class='info-time'>
+            <image src='../../assets/imgs/time.png'></image>
+          {{item.project_label}}
+          </view>
+          <view class='info-address'>
+            <image src='../../assets/imgs/address.png'></image>
+          {{item.venue_info.name}}
+          </view>
+        </view>
+        <view class='item-info-time'>
+          <view class='item-price'>
+            <text>￥</text>
+            <text class='item-price-bold'>{{item.price_low / 100}}</text>
+            <text>起</text>
+          </view>
+          <view class='Collage' wx:if="{{item.promotion}}">拼团</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
