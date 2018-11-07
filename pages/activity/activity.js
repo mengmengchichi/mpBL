@@ -21,7 +21,6 @@ Page({
       ...this.data,
       isShowCity: !this.data.isShowCity,
       active: this.data.active.map((item, index) => {
-        console.log(this.data.isShowCity)
         if (!this.data.isShowCity) {
           if (index === 0) {
             item = 'active';
@@ -35,18 +34,29 @@ Page({
       })
     })
   },
-  
+  refresh() {
+    console.log('s');
+    this.reLoad();
+  },
+  loadMore() {
+    if (this.data.page === this.data.numPages) {
+      return;
+    }
+    ajax.get(`https://show.bilibili.com/api/ticket/project/listV2?version=133&page=${this.data.page}&pagesize=20&platform=web&area=-1&p_type=%E5%85%A8%E9%83%A8%E7%B1%BB%E5%9E%8B`)
+      .then(res => {
+        this.setData({
+          list: [...this.data.list, ...res.data.data.result],
+          page: ++this.data.page
+        })
+      });
+  },
   toDetail(e) {
     console.log(e);
     wx.navigateTo({
       url: `../detail/detail?id=${e.currentTarget.dataset.id}`,
     })
   },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    wx.setNavigationBarTitle({"title": "哔哩哔哩会员购"});
+  reLoad() {
     ajax.get('https://show.bilibili.com/api/ticket/banner/list?district_id=0&position=1&sub_position=0')
       .then((res) => {
         this.setData({
@@ -67,8 +77,14 @@ Page({
           ...this.data,
           citys: res.data.data
         })
-        console.log(this.data.citys);
       })
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    wx.setNavigationBarTitle({"title": "哔哩哔哩会员购"});
+    this.reLoad();
   },
 
   /**
@@ -113,23 +129,14 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    console.log('2');
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    if (this.data.page === this.data.numPages) {
-      return;
-    }
-    ajax.get(`https://show.bilibili.com/api/ticket/project/listV2?version=133&page=${this.data.page}&pagesize=20&platform=web&area=-1&p_type=%E5%85%A8%E9%83%A8%E7%B1%BB%E5%9E%8B`)
-      .then(res => {
-        this.setData({
-          list: [...this.data.list, ...res.data.data.result],
-          page: ++this.data.page
-        })
-      });
+    
   },
 
   /**

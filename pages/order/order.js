@@ -1,18 +1,38 @@
 // pages/order/order.js
+import store from '../../store/reducers/index.js';
+import ajax from '../../utils/ajax.js';
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    cartList: [],
+    cartStore: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    const list = store.getState().cart.cart.cart;
+    list.forEach((item, index) => {
+      ajax.get(`https://show.bilibili.com/api/ticket/project/get?version=133&id=${item.id}`)
+        .then(res => {
+          this.setData({
+            cartList: this.data.cartList.concat({
+              data: res.data.data,
+              count: item.count
+            })
+          }, () => {
+            console.log(this.data.cartList);
+          })
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    })
   },
 
   /**

@@ -1,2 +1,26 @@
 <!--pages/order/order.wxml-->
-<text>pages/order/order.wxml</text>
+<view class='header'>
+  确认订单
+</view>
+<view class='order-wrap'>
+  <view class='orders'>
+    <view class='order-item' wx:for="{{cartList}}" wx:key="{{item.id}}">
+      <view class='check-wrap'>
+        <checkbox></checkbox>
+      </view>
+      <view class='image-wrap'>
+        <image src='{{detail.cover}}'></image>
+      </view>
+      <view class='item-info'>
+        <view class='item-name'>{{item.name}}</view>
+        <view class='item-desc'>{{item.venue_info.province_name}}{{item.venue_info.city_name}}{{item.venue_info.district_name}}{{item.venue_info.address_detail}}</view>
+        <view class='item-price'>￥{{item.market_price_low / 100}}</view>
+        <view class='change-count'>
+          <text class='reduce' catchtap='reduceCount'>-</text>
+          <text class='count'>{{item.count}}</text>
+          <text class='add' catchtap='addCount'>+</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

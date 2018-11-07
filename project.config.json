@@ -37,12 +37,24 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 2,
 			"list": [
 				{
 					"id": -1,
 					"name": "coll",
-					"pathName": "pages/collection/collection"
+					"pathName": "pages/collection/collection",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "detail",
+					"pathName": "pages/detail/detail",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "order",
+					"pathName": "pages/order/order"
 				}
 			]
 		}

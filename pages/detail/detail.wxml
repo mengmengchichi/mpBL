@@ -1,2 +1,89 @@
 <!--pages/detail/detail.wxml-->
-<text>pages/detail/detail.wxml</text>
+<view class='header'>
+  <image class="header-img" src='../../assets/imgs/back.png' mode="aspectFit" catchtap='goBack'></image>
+</view>
+
+<scroll-view class='detail-wrap'>
+  <view class='banner-wrap'>
+    <image src='{{detail.banner}}'></image>
+    <view class='banner-info'>
+      <view class='banner-name'>{{detail.name}}</view>
+      <view class='banner-price'>
+        <text class='true-price'>￥<text>{{detail.price_low / 100}}</text> - ￥<text>{{detail.price_high / 100}}</text>
+        </text>
+        <text class='false-price'>￥{{detail.market_price_high / 100}}
+        </text>
+      </view>
+    </view>
+  </view>
+
+  <view class='time-address'>
+    <view class='info-time'>
+      <image src='../../assets/imgs/time.png'></image>
+      <text>{{detail.project_label}}</text>
+    </view>
+    <view class='info-address'>
+      <image src='../../assets/imgs/address.png'></image>
+      <view>
+        <text class='address-top'>{{detail.venue_info.name}}</text>
+        <text class='address-bottom'>{{detail.venue_info.name}}</text>
+      </view>
+    </view>
+  </view>
+
+
+  <view class='footer-wrap'>
+    <view class='collect'>
+      <image src='../../assets/imgs/collection.png'></image>
+      <text>收藏</text>
+    </view>
+    <view class='buy-alone' catchtap='buyAlone'>
+      <text>单独购票</text>
+    </view>
+    <view class='buy-collage'>
+      <text>我要拼团</text>
+    </view>
+  </view>
+</scroll-view>
+<view class='buy-alone-modal' wx:if="{{showAloneModal}}">
+    <view class="cancelModal" catchtap='cancelModal'>
+      
+    </view>
+    <view class='cancel' catchtap='cancelModal'>x</view>
+      <view class='modal-container'>
+        <view class='screen-container'>
+          <view class='title'>选择场次</view>
+          <view class='screen-time'>
+            <view class="{{checked ? 'screen-item native' : 'screen-item'}}" wx:for="{{detail.screen_list}}" wx:key="{{item.id}}">
+              {{item.name}}
+            </view>
+          </view>
+        </view>
+        <view class='price-container'>
+          <view class='title'>选择票价</view>
+          <view class='price'>
+            <view class="{{checked ? 'price-item native' : 'price-item'}}" wx:for="{{detail.screen_list[0].ticket_list}}" wx:key="{{item.id}}">
+              ￥{{item.market_price / 100}}{{item.desc}}
+            </view>
+          </view>
+        </view>
+        <view class='counter'>
+          <view class='title'>数量确认</view>
+          <view class='change-count'>
+            <text class='reduce' catchtap='reduceCount'>-</text>
+            <text class='count'>{{count}}</text>
+            <text class='add' catchtap='addCount'>+</text>
+          </view>
+        </view>
+      </view>
+      <view class='modal-footer'>
+        <text>合计：</text>
+        <text class='goods-price'>{{detail.price_high/100 * count}}</text>
+        <navigator url='../order/order' class='buy-now'  catchtap='addCart' data-id='detail.id'>
+          <text class='buy-now'>立即购票</text>
+        </navigator>
+      </view>
+  </view>
+
+
+
