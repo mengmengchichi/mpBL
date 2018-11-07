@@ -4,17 +4,21 @@
 </view>
 <view class='order-wrap'>
   <view class='orders'>
-    <view class='order-item' wx:for="{{cartList}}" wx:key="{{item.id}}">
-      <view class='check-wrap'>
-        <checkbox></checkbox>
+    <view class='order-item' wx:for="{{cartList}}" wx:key="{{item.data.id}}">
+      <view class='check-wrap checked' data>
+        <checkbox-group bindchange="checkboxChange">
+          <label class="checkbox" >
+            <checkbox value="{{item.data.id}}"/>
+          </label>
+        </checkbox-group>
       </view>
       <view class='image-wrap'>
-        <image src='{{detail.cover}}'></image>
+        <image src='{{item.data.cover}}'></image>
       </view>
       <view class='item-info'>
-        <view class='item-name'>{{item.name}}</view>
-        <view class='item-desc'>{{item.venue_info.province_name}}{{item.venue_info.city_name}}{{item.venue_info.district_name}}{{item.venue_info.address_detail}}</view>
-        <view class='item-price'>￥{{item.market_price_low / 100}}</view>
+        <view class='item-name'>{{item.data.name}}</view>
+        <view class='item-desc'>{{item.data.venue_info.province_name}}{{item.data.venue_info.city_name}}{{item.data.venue_info.district_name}}{{item.data.venue_info.address_detail}}</view>
+        <view class='item-price'>￥{{item.data.market_price_low / 100}}</view>
         <view class='change-count'>
           <text class='reduce' catchtap='reduceCount'>-</text>
           <text class='count'>{{item.count}}</text>

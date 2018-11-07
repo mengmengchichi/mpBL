@@ -16,3 +16,9 @@ export const REDUCE_COUNT = (option) => {
     "data": option
   }
 }
+export const CHECK_CHANGE = (option) => {
+  return {
+    "type": 'CHECK_CHANGE',
+    "data": option
+  }
+}

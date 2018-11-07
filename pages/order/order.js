@@ -1,6 +1,7 @@
 // pages/order/order.js
 import store from '../../store/reducers/index.js';
 import ajax from '../../utils/ajax.js';
+import { CHECK_CHANGE } from '../../store/actions/cartAction.js';
 
 Page({
 
@@ -9,14 +10,21 @@ Page({
    */
   data: {
     cartList: [],
-    cartStore: []
+    cartStore: [],
+    checkedList: [],
   },
-
+  checkboxChange(e) {
+    store.dispatch(CHECK_CHANGE({
+      id: e.detail.value[0]
+    }))
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(store.getState())
     const list = store.getState().cart.cart.cart;
+    console.log(list)
     list.forEach((item, index) => {
       ajax.get(`https://show.bilibili.com/api/ticket/project/get?version=133&id=${item.id}`)
         .then(res => {
