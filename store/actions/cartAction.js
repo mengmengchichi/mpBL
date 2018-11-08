@@ -22,3 +22,9 @@ export const CHECK_CHANGE = (option) => {
     "data": option
   }
 }
+export const ALL_CHECKED = (option) => {
+  return {
+    "type": 'ALL_CHECKED',
+    "data": option
+  }
+}

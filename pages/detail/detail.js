@@ -2,7 +2,7 @@
 import ajax from "../../utils/ajax.js";
 import store from '../../store/reducers/index.js';
 import { ADD_CART, ADD_COUNT, REDUCE_COUNT } from "../../store/actions/cartAction.js";
-
+import cart from '../../store/reducers/cart.js';
 
 Page({
 
@@ -36,13 +36,15 @@ Page({
       id: this.data.detail.id,
       count: this.data.count
     });
+
     store.dispatch(action);
-    wx.navigateTo({
-      url: '../order/order',
-      success: function(res) {},
-      fail: function(res) {},
-      complete: function(res) {},
-    })
+    
+    // wx.switchTab({
+    //   url: '../order/order',
+    //   success: function(res) {},
+    //   fail: function(res) {},
+    //   complete: function(res) {},
+    // })
   },
   reduceCount() { 
     if (this.data.count > 1) {

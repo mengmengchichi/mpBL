@@ -1,14 +1,17 @@
 <!--pages/order/order.wxml-->
-<view class='header'>
-  确认订单
-</view>
-<view class='order-wrap'>
+
+<scroll-view class='order-wrap' srcoll-y>
+  <view class='header-wrap'>
+    <view class='header' catchtap='goBack'>
+      确认订单
+    </view>
+  </view>
   <view class='orders'>
     <view class='order-item' wx:for="{{cartList}}" wx:key="{{item.data.id}}">
-      <view class='check-wrap checked' data>
-        <checkbox-group bindchange="checkboxChange">
+      <view class="{{item.checked ? 'check-wrap checked' : 'check-wrap'}}" data>
+        <checkbox-group bindchange="checkboxChange" data-id="{{item.data.id}}">
           <label class="checkbox" >
-            <checkbox value="{{item.data.id}}"/>
+            <checkbox value="{{item.data.id}}" />
           </label>
         </checkbox-group>
       </view>
@@ -20,11 +23,33 @@
         <view class='item-desc'>{{item.data.venue_info.province_name}}{{item.data.venue_info.city_name}}{{item.data.venue_info.district_name}}{{item.data.venue_info.address_detail}}</view>
         <view class='item-price'>￥{{item.data.market_price_low / 100}}</view>
         <view class='change-count'>
-          <text class='reduce' catchtap='reduceCount'>-</text>
+          <text class='reduce' catchtap='reduceCount' data-id='{{item.data.id}}'>-</text>
           <text class='count'>{{item.count}}</text>
-          <text class='add' catchtap='addCount'>+</text>
+          <text class='add' catchtap='addCount' data-id='{{item.data.id}}'>+</text>
         </view>
       </view>
     </view>
   </view>
+</scroll-view>
+
+<view class='footer-wrap'>
+  <checkbox-group bindchange="allChecked" class="{{isAllChecked ? 'footer-check checked' : 'footer-check'}}">
+    <label class="checkbox">
+      <checkbox value="" checked='{{isAllChecked}}'/>
+      全选
+    </label>
+  </checkbox-group>
+  <view class='total-price-wrap'>
+    <text class='total-price'>
+      <text>合计：</text>
+      <text>{{totalPrice}}</text>
+    </text>
+    <text class='price-info'>不含运费</text>
+  </view>
+  <button
+  class="{{hasChecked ? 'balance active' : 'balance'}}"
+  size='mini'
+  catchtap='balance'
+  data-abled="{{hasChecked}}"
+  >结算({{totalCount}})</button>
 </view>

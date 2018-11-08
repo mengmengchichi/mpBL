@@ -1,28 +1,30 @@
 const initState = {
-  cart: wx.getStorageSync('cart').cart || [],
+  cart: wx.getStorageSync('cart') || [],
 }
 export default (state = initState, action) => {
   switch(action.type) {
     case 'ADD_CART':
-      console.log(state)
       const isInCart = state.cart.some(item => item.id === action.data.id);
+      let newData = [];
       if (isInCart) {
-        state.cart.map(item => {
+        newData = state.cart.map(item => {
           if (item.id === action.data.id) {
             item.count += action.data.count;
           }
           return item
         })
       } else {
-        state.cart.push({
+        newData = state.cart.concat({
           id: action.data.id,
           count: action.data.count,
           checked: false
         })
       }
-      wx.setStorageSync('cart', state);
-      console.log(state);
-      return state;
+      console.log(newData);
+      wx.setStorageSync('cart', newData);
+      return Object.assign({}, state, {
+        cart: newData
+      });
     case 'ADD_COUNT':
       const incData = state.cart.map(item => {
         if (item.id === action.data.id) {
@@ -31,6 +33,7 @@ export default (state = initState, action) => {
         //console.log(item.count);
         return item;
       })
+      wx.setStorageSync('cart', incData);
       return {
         ...state,
         cart: incData
@@ -45,23 +48,33 @@ export default (state = initState, action) => {
         }
         return item;
       })
+      wx.setStorageSync('cart', redData);
       return {
         ...state,
         cart: redData
       }
     case 'CHECK_CHANGE':
-      console.log(state)
-      const newData = state.cart.map(item => {
+      let cheData = state.cart.map(item => {
         if (item.id === action.data.id) {
           item.checked = !item.checked;
         }
         return item;
       });
-      console.log(newData)
+      wx.setStorageSync('cart', cheData);
       return {
         ...state,
-        cart: newData
-      }              
+        cart: cheData
+      }
+    case "ALL_CHECKED":
+        const allData = state.cart.map(item => {
+          item.checked = action.data.isAllChecked;
+          return item;
+        });
+        wx.setStorageSync('cart', allData);
+        return {
+          ...state,
+          cart: allData
+        }
     default:
       return state;
   }
