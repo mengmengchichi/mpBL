@@ -149,7 +149,6 @@ Page({
   
     
 
-
     this.setData({
       ...this.data,
       cartList: this.data.cartList.map(item => {
@@ -157,7 +156,8 @@ Page({
           if (item.count > 1) {
             item.count -= 1
           }
-          if (!item.redChecked) {
+          if (item.redChecked === undefined) {
+            console.log(2)
             item.redChecked = true;
           }
         }
@@ -166,7 +166,20 @@ Page({
     }, () => {
       this.getTotalCount();
       this.getTotalPrice();
-      console.log(this.data.cartList)
+      const redChecked = this.data.cartList.filter(item => item.data.id === id)[0].redChecked;
+      if (redChecked) {
+        this.checkboxChange(e);
+        const newCart = this.data.cartList.map(item => {
+          if (item.data.id === id) {
+            item.redChecked = false;
+          }
+          return item;
+        });
+        this.setData({
+          ...this.data,
+          cartList: newCart
+        });
+      }
     });
     const count = this.data.cartList.reduce((result, current) => {
       result += current.count;
@@ -179,18 +192,18 @@ Page({
     store.dispatch(action);
   },
   addCount(e) {
-    this.setData({
-      ...this.data,
-      addChecked: true
-    }, () => {
-      if (this.data.addChecked) {
-        this.checkboxChange(e)
-        this.setData({
-          ...this.data,
-          addChecked: false
-        })
-      }
-    })
+    // this.setData({
+    //   ...this.data,
+    //   addChecked: true
+    // }, () => {
+    //   if (this.data.addChecked) {
+    //     this.checkboxChange(e)
+    //     this.setData({
+    //       ...this.data,
+    //       addChecked: false
+    //     })
+    //   }
+    // })
     const id = e.currentTarget.dataset.id;
     const action = ADD_COUNT({
       id
@@ -199,13 +212,30 @@ Page({
       ...this.data,
       cartList: this.data.cartList.map(item => {
         if (item.data.id === id) {
-          item.count += 1
+          item.count += 1;
+          if (item.redChecked === undefined) {
+            item.redChecked = true;
+          }
         }
         return item
       })
     }, () => {
       this.getTotalCount();
       this.getTotalPrice();
+      const redChecked = this.data.cartList.filter(item => item.data.id === id)[0].redChecked;
+      if (redChecked) {
+        this.checkboxChange(e);
+        const newCart = this.data.cartList.map(item => {
+          if (item.data.id === id) {
+            item.redChecked = false;
+          }
+          return item;
+        });
+        this.setData({
+          ...this.data,
+          cartList: newCart
+        });
+      }
     });
     const count = this.data.cartList.reduce((result, current) => {
       result += current.count;

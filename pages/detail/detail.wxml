@@ -3,7 +3,7 @@
   <image class="header-img" src='../../assets/imgs/back.png' mode="aspectFit" catchtap='goBack'></image>
 </view>
 
-<scroll-view class='detail-wrap'>
+<scroll-view class='detail-wrap' scroll-y>
   <view class='banner-wrap'>
     <image src='{{detail.banner}}'></image>
     <view class='banner-info'>
@@ -30,6 +30,17 @@
       </view>
     </view>
   </view>
+  <view class='want-go-wrap'>
+    <view class='face-img'>
+      <image
+      wx:for="{{detail.wish_info.list}}"
+      wx:key="{{item.mid}}"
+      src='{{item.face}}'
+      ></image>
+    </view>
+    <view class='want-num'>等{{detail.wish_info.count}}人想去</view>
+    <button class='want-btn' size='mini'>想去</button>
+  </view>
 
 
   <view class='footer-wrap'>
@@ -45,44 +56,60 @@
     </view>
   </view>
 </scroll-view>
+
+
+
 <view class='buy-alone-modal' wx:if="{{showAloneModal}}">
     <view class="cancelModal" catchtap='cancelModal'>
       
     </view>
-    <view class='cancel' catchtap='cancelModal'>x</view>
-      <view class='modal-container'>
-        <view class='screen-container'>
-          <view class='title'>选择场次</view>
-          <view class='screen-time'>
-            <view class="{{checked ? 'screen-item native' : 'screen-item'}}" wx:for="{{detail.screen_list}}" wx:key="{{item.id}}">
-              {{item.name}}
-            </view>
-          </view>
-        </view>
-        <view class='price-container'>
-          <view class='title'>选择票价</view>
-          <view class='price'>
-            <view class="{{checked ? 'price-item native' : 'price-item'}}" wx:for="{{detail.screen_list[0].ticket_list}}" wx:key="{{item.id}}">
-              ￥{{item.market_price / 100}}{{item.desc}}
-            </view>
-          </view>
-        </view>
-        <view class='counter'>
-          <view class='title'>数量确认</view>
-          <view class='change-count'>
-            <text class='reduce' catchtap='reduceCount'>-</text>
-            <text class='count'>{{count}}</text>
-            <text class='add' catchtap='addCount'>+</text>
+  
+    <view class='modal-container'>
+      <view class='cancel' catchtap='cancelModal'>x</view>
+      <view class='screen-container'>
+        <view class='title'>选择场次</view>
+        <view class='screen-time'>
+          <view
+          class="{{item.checked ? 'screen-item native' : 'screen-item'}}"
+          wx:for="{{detail.screen_list}}"
+          wx:key="{{item.id}}"
+          catchtap='click'
+          data-id='{{item.id}}'
+          >
+            {{item.name}}
           </view>
         </view>
       </view>
-      <view class='modal-footer'>
-        <text>合计：</text>
-        <text class='goods-price'>{{detail.price_high/100 * count}}</text>
-        <navigator url='../order/order' class='buy-now'  catchtap='addCart' data-id='detail.id'>
-          <text class='buy-now'>立即购票</text>
-        </navigator>
+      <view class='price-container'>
+        <view class='title'>选择票价</view>
+        <view class='price'>
+          <view
+          class="{{item.checked ? 'price-item native' : 'price-item'}}"
+          wx:for="{{detail.screen_list[0].ticket_list}}"
+          wx:key="{{item.id}}"
+          catchtap='catch'
+          data-id='{{item.id}}'
+          >
+            ￥{{item.market_price / 100}}{{item.desc}}
+          </view>
+        </view>
       </view>
+      <view class='counter'>
+        <view class='title'>数量确认</view>
+        <view class='change-count'>
+          <text class='reduce' catchtap='reduceCount'>-</text>
+          <text class='count'>{{count}}</text>
+          <text class='add' catchtap='addCount'>+</text>
+        </view>
+      </view>
+    </view>
+    <view class='modal-footer'>
+      <text>合计：</text>
+      <text class='goods-price'>{{detail.price_high/100 * count}}</text>
+      <navigator url='../order/order' class='buy-now'  catchtap='addCart' data-id='detail.id'>
+        <text class='buy-now'>立即购票</text>
+      </navigator>
+    </view>
   </view>
 
 

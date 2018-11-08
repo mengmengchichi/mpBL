@@ -2,6 +2,10 @@
 page{
   height: 100%;
 }
+.active{
+  color: #ff5687;
+  border-color: #ff5687 !important;
+}
 .city-select-wrap{
   position: fixed;
   left: 0;
@@ -88,7 +92,10 @@ page{
   margin-top: 44px;
   font-size: 10px;
   color: #999;
-  top: 50%;
+  top: 46%;
   text-align: center;
   transform: translateY(-50%);
+}
+.to-city-group view{
+  padding: 2px 0;
 }

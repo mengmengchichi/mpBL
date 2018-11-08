@@ -1,10 +1,10 @@
 <!--components/city/city.wxml-->
-<scroll-view class='city-select-wrap' scroll-y>
+<scroll-view class='city-select-wrap' scroll-y scroll-top="{{scrollTop}}">
   <view class='city-list-wrap'>
     <view class='city-container'>
       <view class='all-city' catchtap='console'>全部</view>
       <view class='whole-citys'>
-        <view class='whole-city-item'>全国</view>
+        <view class='whole-city-item active'>全国</view>
         <view class='whole-city-item'>海外</view>
       </view>
       <view class='hot-city'>热门</view>
@@ -23,8 +23,8 @@
     </view>
   </view>
   <view class='to-city-group'>
-    <view>全部</view>
-    <view>热门</view>
-    <view wx:for="{{citys.list}}" wx:key="item.letter">{{item.letter}}</view>
+    <view catchtap='goThere'>全部</view>
+    <view catchtap='goThere'>热门</view>
+    <view wx:for="{{citys.list}}" wx:key="{{item.letter}}" catchtap='goThere' data-letter="{{item.letter}}">{{item.letter}}</view>
   </view>
 </scroll-view>

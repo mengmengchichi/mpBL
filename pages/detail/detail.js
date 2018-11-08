@@ -11,10 +11,46 @@ Page({
    */
   data: {
     detail: {},
-    id: 14234,
     showAloneModal: false,
     count: 1,
     checked: false
+  },
+  click(e) {
+    const newScreen = this.data.detail.screen_list.map(item => {
+      if (item.id === e.currentTarget.dataset.id) {
+        item.checked = true;
+      } else {
+        item.checked = false;
+      }
+      return item;
+    })
+    this.setData({
+      ...this.data,
+      detail: {
+        ...this.data.detail,
+        screen_list: newScreen
+      }
+    }, () => console.log(this.data.detail))
+  },
+  catch(e) {
+    const newTicket = this.data.detail.screen_list[0].ticket_list.map(item => {
+      if (item.id === e.currentTarget.dataset.id) {
+        item.checked = true;
+      } else {
+        item.checked = false;
+      }
+      return item;
+    })
+    this.setData({
+      ...this.data,
+      detail: {
+        ...this.data.detail,
+        screen_list: this.data.detail.screen_list.map(item => {
+          item.ticket_list = newTicket;
+          return item;
+        })
+      }
+    })
   },
   goBack() {
     wx.navigateBack({
@@ -39,12 +75,9 @@ Page({
 
     store.dispatch(action);
     
-    // wx.switchTab({
-    //   url: '../order/order',
-    //   success: function(res) {},
-    //   fail: function(res) {},
-    //   complete: function(res) {},
-    // })
+    wx.switchTab({
+      url: '../order/order',
+    })
   },
   reduceCount() { 
     if (this.data.count > 1) {
@@ -80,15 +113,27 @@ Page({
   onLoad: function (options) {
     ajax.get(`https://show.bilibili.com/api/ticket/project/get?version=133&id=${options.id}`)
       .then(res => {
+        
+        res.data.data.screen_list.map((item, index) => {
+          if (index === 0) {
+            item.checked = true;
+          } else {
+            item.checked = false;
+          }
+          return item;
+        });
+        res.data.data.screen_list[0].ticket_list.map((item, index) => {
+          if (index === 0) {
+            item.checked = true;
+          } else {
+            item.checked = false;
+          }
+          return item;
+        });
+        
         this.setData({
           ...this.data,
           detail: res.data.data
-        }, () => {
-          if (this.data.detail.screen_list.length === 1 && this.data.detail.screen_list[0].ticket_list.length === 1) {
-            this.setData({
-              checked: true
-            })
-          }
         })
       })
       .catch(err => {
