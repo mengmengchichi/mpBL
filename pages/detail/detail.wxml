@@ -22,12 +22,17 @@
       <image src='../../assets/imgs/time.png'></image>
       <text>{{detail.project_label}}</text>
     </view>
-    <view class='info-address'>
+    <view
+    class='info-address'
+    catchtap='showMap'
+    data-coor="{{detail.venue_info.coordinate.coor}}"
+    >
       <image src='../../assets/imgs/address.png'></image>
       <view>
         <text class='address-top'>{{detail.venue_info.name}}</text>
         <text class='address-bottom'>{{detail.venue_info.name}}</text>
       </view>
+      <image class='go-map' src='../../assets/imgs/go.png'></image>
     </view>
   </view>
   <view class='want-go-wrap'>
@@ -44,8 +49,8 @@
 
 
   <view class='footer-wrap'>
-    <view class='collect'>
-      <image src='../../assets/imgs/collection.png'></image>
+    <view class="{{collecting ? 'collect collected' : 'collect'}}" catchtap='collect'>
+      <image src="{{collecting ? '../../assets/imgs/collection-selected.png' : '../../assets/imgs/collection.png'}}"></image>
       <text>收藏</text>
     </view>
     <view class='buy-alone' catchtap='buyAlone'>
@@ -112,5 +117,12 @@
     </view>
   </view>
 
+  <view class="map_container" wx:if="{{showMap}}">
+    <map class="map" id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="16" markers="{{markers}}"></map>  
+  </view>
+  <view class="map_text" wx:if="{{showMap}}">
+      <text class="h1">{{textData.name}}</text>
+      <view>{{textData.desc}}</view>
+  </view>
 
 

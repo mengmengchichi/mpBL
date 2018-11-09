@@ -1,0 +1,32 @@
+/* pages/search/search.wxss */
+.weui-search-bar__cancel-btn{
+  font-size: 14px;
+  color: #757575;
+}
+.hot-title{
+  font-weight: 400;
+  font-size: 12px;
+  color: #999;
+  padding: 12px;
+}
+.hot-list{
+  display: flex;
+  flex-wrap: wrap;
+}
+.hot-item{
+  margin: 0 4px 12px;
+  background: #f4f4f4;
+  border-radius: 30px;
+}
+.hot-item text{
+  
+  font-size: 12px;
+  line-height: 12px;
+  color: #212121;
+  max-width: 274px;
+  padding: 9px 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-sizing: border-box;
+}

@@ -1,8 +1,11 @@
 // pages/order/order.js
 import store from '../../store/reducers/index.js';
 import ajax from '../../utils/ajax.js';
-import { CHECK_CHANGE, ADD_COUNT, REDUCE_COUNT, ALL_CHECKED } from '../../store/actions/cartAction.js';
+import { CHECK_CHANGE, ADD_COUNT, REDUCE_COUNT, ALL_CHECKED, DELETE } from '../../store/actions/cartAction.js';
 
+
+const app = getApp();
+console.log(app.globalData);
 Page({
 
   /**
@@ -14,6 +17,27 @@ Page({
     totalPrice: 0,
     totalCount: 2,
     hasChecked: false,
+    showDel: false,
+    delId: '',
+    shouldDel: false
+  },
+  abandon() {
+    this.setData({
+      showDel: false
+    })
+  },
+  deleted() {
+    const action = DELETE({
+      id: this.data.delId
+    })
+
+    this.setData({
+      ...this.data,
+      showDel: false,
+      shouldDel:true
+    });
+    
+    store.dispatch(action)
   },
   balance(e) {
     console.log(e);
@@ -71,34 +95,7 @@ Page({
   },
   checkboxChange(e) {
     const id = e.currentTarget.dataset.id;
-    store.subscribe(() => {
-      const newStore = store.getState().cart.cart;
-      this.hasChecked();
-      const newData = this.data.cartList.map(item => {
-        newStore.forEach(sItem => {
-          if (sItem.id === item.data.id) {
-            item.checked = sItem.checked;
-          }
-        })
-        return item;
-      });
-      let isAllChecked = 0;
-      if (newStore.every(item => item.checked === true)) {
-        isAllChecked = true;
-      } else {
-        isAllChecked = false;
-      }
-      this.setData({
-        ...this.data,
-        cartList: newData,
-        isAllChecked,
-        addChecked: !this.data.addChecked,
-        redChecked: !this.data.redChecked
-      }, () => {
-        this.getTotalCount();
-        this.getTotalPrice();
-      })
-    });
+    
     store.dispatch(CHECK_CHANGE({
       id
     }));
@@ -151,27 +148,36 @@ Page({
 
     this.setData({
       ...this.data,
+      delId: id,
+      showDel: this.data.cartList.some(item => {
+        if (item.data.id === id) {
+          return item.count === 1
+        } else {
+          return false;
+        }
+      }),
       cartList: this.data.cartList.map(item => {
         if (item.data.id === id) {
           if (item.count > 1) {
             item.count -= 1
-          }
-          if (item.redChecked === undefined) {
-            console.log(2)
-            item.redChecked = true;
-          }
+          } 
+          if (item.checked) {
+            item.redChecked = !item.checked;
+          } 
         }
         return item
       })
     }, () => {
       this.getTotalCount();
       this.getTotalPrice();
+      return;
       const redChecked = this.data.cartList.filter(item => item.data.id === id)[0].redChecked;
+      
       if (redChecked) {
         this.checkboxChange(e);
         const newCart = this.data.cartList.map(item => {
           if (item.data.id === id) {
-            item.redChecked = false;
+            item.redChecked = !redChecked;
           }
           return item;
         });
@@ -213,9 +219,9 @@ Page({
       cartList: this.data.cartList.map(item => {
         if (item.data.id === id) {
           item.count += 1;
-          if (item.redChecked === undefined) {
-            item.redChecked = true;
-          }
+          if (item.checked) {
+            item.redChecked = !item.checked;
+          } 
         }
         return item
       })
@@ -227,7 +233,7 @@ Page({
         this.checkboxChange(e);
         const newCart = this.data.cartList.map(item => {
           if (item.data.id === id) {
-            item.redChecked = false;
+            item.redChecked = redChecked;
           }
           return item;
         });
@@ -252,6 +258,49 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
+    store.subscribe(() => {
+      const newStore = store.getState().cart.cart;
+      this.hasChecked();
+
+      if (this.data.shouldDel) {
+        const newCart = this.data.cartList.filter(item => {
+          return item.data.id !== this.data.delId;
+        });
+        this.setData({
+          ...this.data,
+          cartList: newCart,
+          shouldDel: false
+        });
+      }
+      const newData = this.data.cartList.map(item => {
+        newStore.forEach(sItem => {
+          if (sItem.id === item.data.id) {
+            item.checked = sItem.checked;
+          }
+        })
+        return item;
+      });
+      let isAllChecked = 0;
+      if (newStore.every(item => item.checked === true)) {
+        isAllChecked = true;
+      } else {
+        isAllChecked = false;
+      }
+      this.setData({
+        ...this.data,
+        cartList: newData,
+        isAllChecked,
+        addChecked: !this.data.addChecked,
+        redChecked: !this.data.redChecked
+      }, () => {
+        this.getTotalCount();
+        this.getTotalPrice();
+      })
+    });
+
+
+
     wx.setNavigationBarTitle({
       title: '订单',
     })

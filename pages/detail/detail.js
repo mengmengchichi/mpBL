@@ -3,6 +3,8 @@ import ajax from "../../utils/ajax.js";
 import store from '../../store/reducers/index.js';
 import { ADD_CART, ADD_COUNT, REDUCE_COUNT } from "../../store/actions/cartAction.js";
 import cart from '../../store/reducers/cart.js';
+import map from '../../libs/amap-wx.js';
+
 
 Page({
 
@@ -13,7 +15,66 @@ Page({
     detail: {},
     showAloneModal: false,
     count: 1,
-    checked: false
+    checked: false,
+    markers: [],
+    latitude: '',
+    longitude: '',
+    textData: {},
+    showMap: false,
+    collecting: wx.getStorageSync('collection').some(item => {
+      return item === wx.getStorageSync('detail')
+    }) || false,
+  },
+  collect() {
+    const collection = wx.getStorageSync('collection') || [];
+    this.setData({
+      ...this.data,
+      collecting: !this.data.collecting,
+    }, () => {
+      if (this.data.collecting) {
+        const newCollection = collection.concat(this.data.detail.id)
+        wx.setStorageSync("collection", newCollection);
+      } else {
+        const newCollection = collection.filter(item => item !== this.data.detail.id);
+        wx.setStorageSync("collection", newCollection);
+      }
+    })
+  },
+  showMap(e) {
+    let that = this;
+    const myAmapFun = new map.AMapWX({ key: '054206922c07e78bf5b40cd006949173' });
+    myAmapFun.getRegeo({
+      location: e.currentTarget.dataset.coor,
+      iconPath: "../../assets/imgs/marker.png",
+      iconWidth: 22,
+      iconHeight: 32,
+      success: function (data) {
+        var marker = [{
+          id: data[0].id,
+          latitude: data[0].latitude,
+          longitude: data[0].longitude,
+          iconPath: data[0].iconPath,
+          width: data[0].width,
+          height: data[0].height
+        }]
+        that.setData({
+          markers: marker,
+          showMap: true
+        });
+        that.setData({
+          latitude: data[0].latitude
+        });
+        that.setData({
+          longitude: data[0].longitude
+        });
+        that.setData({
+          textData: {
+            name: data[0].name,
+            desc: data[0].desc
+          }
+        })
+      }
+    })
   },
   click(e) {
     const newScreen = this.data.detail.screen_list.map(item => {
@@ -30,7 +91,7 @@ Page({
         ...this.data.detail,
         screen_list: newScreen
       }
-    }, () => console.log(this.data.detail))
+    })
   },
   catch(e) {
     const newTicket = this.data.detail.screen_list[0].ticket_list.map(item => {
@@ -55,6 +116,9 @@ Page({
   goBack() {
     wx.navigateBack({
       delta: 1
+    })
+    this.setData({
+      showMap: false
     })
   },
   buyAlone() {
@@ -111,7 +175,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    ajax.get(`https://show.bilibili.com/api/ticket/project/get?version=133&id=${options.id}`)
+    if (options.id) {
+      wx.setStorageSync('detail', options.id);
+    }
+    const id = options.id || wx.getStorageSync('detail');
+    ajax.get(`https://show.bilibili.com/api/ticket/project/get?version=133&id=${id}`)
       .then(res => {
         
         res.data.data.screen_list.map((item, index) => {

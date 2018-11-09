@@ -53,3 +53,15 @@
   data-abled="{{hasChecked}}"
   >结算({{totalCount}})</button>
 </view>
+
+
+<view class='delete-wrap' wx:if="{{showDel}}">
+  <view class='del-container'>
+    <view class='del-image'></view>
+    <view class='del-title'>是否从购物车删除该商品？</view>
+    <view class='del-btn'>
+      <button catchtap='abandon'>放弃</button>
+      <button class='delete' catchtap='deleted'>移除商品</button>
+    </view>
+  </view>
+</view>

@@ -3,7 +3,8 @@
     "pages/activity/activity",
     "pages/collection/collection",
     "pages/order/order",
-    "pages/detail/detail"
+    "pages/detail/detail",
+    "pages/search/search"
   ],
   "window":{
     "backgroundTextStyle":"light",

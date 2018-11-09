@@ -5,7 +5,7 @@ scroll-y
 bindscrolltoupper="refresh"
 bindscrolltolower="loadMore"
 >
-  <view class="weui-search-bar" wx:if="{{!isShowCity}}">
+  <view class="weui-search-bar" wx:if="{{!isShowCity}}" catchtap='toSearch'>
     <view class="weui-search-bar__form">
         <view class="weui-search-bar__box">
             <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
@@ -37,7 +37,7 @@ bindscrolltolower="loadMore"
 
   <view class="{{selectionFixed}} select">
     <view class='select-city {{active[0]}}' catchtap='selectCity' data-type="city">
-      <view class='select-wrap'>全国<text class='select-icon'></text></view>
+      <view class='select-wrap'>{{cityType}}<text class='select-icon'></text></view>
     </view>
     <view class='select-type {{active[1]}}'>
       <view class='select-wrap'>全部类型<text class='select-icon'></text></view>
@@ -47,7 +47,13 @@ bindscrolltolower="loadMore"
     </view>
   </view>
 
-  <city wx:if="{{isShowCity}}" citys="{{citys}}"></city>
+  <city
+  wx:if="{{isShowCity}}"
+  citys="{{citys}}"
+  selectCity="{{selectCity}}"
+  bind:myevent="toggleToast"
+  cityId="{{cityId}}"
+  ></city>
 
   <view class='product-wrap' wx:if="{{!isShowCity}}">
     <view class='product-list'>
@@ -73,6 +79,12 @@ bindscrolltolower="loadMore"
           </view>
         </view>
       </view>
+    </view>
+  </view>
+
+  <view class='load-all-wrap' wx:if="{{loadAll}}">
+    <view class='load-all'>
+      没有了哟，去其他城市看看吧~
     </view>
   </view>
 </scroll-view>

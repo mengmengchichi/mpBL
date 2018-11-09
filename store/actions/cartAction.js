@@ -28,3 +28,9 @@ export const ALL_CHECKED = (option) => {
     "data": option
   }
 }
+export const DELETE = (option) => {
+  return {
+    "type": 'DELETE',
+    "data": option
+  }
+}

@@ -13,10 +13,46 @@ Page({
     isShowCity: false,
     active: ['','',''], 
     numPages: 0,
-    citys: {}
+    citys: {},
+    cityType: '全国',
+    cityId: '-1',
+    loadAll: false
   },
-
-  selectCity() {
+  toSearch() {
+    wx.navigateTo({
+      url: '../search/search',
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
+    })
+  },
+  toggleToast(e) {
+    this.setData({
+      ...this.data,
+      list: e.detail.list,
+      page: e.detail.page,
+      numPages: e.detail.numPages,
+      isShowCity: false,
+      cityType: e.detail.name,
+      cityId: e.detail.id
+    }, () => {
+      this.setData({
+        active: this.data.active.map((item, index) => {
+          if (this.data.isShowCity) {
+            if (index === 0) {
+              item = 'active';
+            }
+          } else {
+            if (index === 0) {
+              item = '';
+            }
+          }
+          return item
+        })
+      })
+    })
+  },
+  selectCity(e) {
     this.setData({
       ...this.data,
       isShowCity: !this.data.isShowCity,
@@ -35,14 +71,16 @@ Page({
     })
   },
   refresh() {
-    console.log('s');
     this.reLoad();
   },
   loadMore() {
     if (this.data.page === this.data.numPages) {
+      this.setData({
+        loadAll: true
+      })
       return;
     }
-    ajax.get(`https://show.bilibili.com/api/ticket/project/listV2?version=133&page=${this.data.page}&pagesize=20&platform=web&area=-1&p_type=%E5%85%A8%E9%83%A8%E7%B1%BB%E5%9E%8B`)
+    ajax.get(`https://show.bilibili.com/api/ticket/project/listV2?version=133&page=${this.data.page}&pagesize=20&platform=web&area=${this.data.cityId}&p_type=%E5%85%A8%E9%83%A8%E7%B1%BB%E5%9E%8B`)
       .then(res => {
         this.setData({
           list: [...this.data.list, ...res.data.data.result],
@@ -51,7 +89,6 @@ Page({
       });
   },
   toDetail(e) {
-    console.log(e);
     wx.navigateTo({
       url: `../detail/detail?id=${e.currentTarget.dataset.id}`,
     })
@@ -62,7 +99,7 @@ Page({
         this.setData({
           banner: res.data.data
         })
-        ajax.get('https://show.bilibili.com/api/ticket/project/listV2?version=133&page=1&pagesize=20&platform=web&area=-1&p_type=%E5%85%A8%E9%83%A8%E7%B1%BB%E5%9E%8B')
+        ajax.get(`https://show.bilibili.com/api/ticket/project/listV2?version=133&page=1&pagesize=20&platform=web&area=${this.data.cityId}&p_type=%E5%85%A8%E9%83%A8%E7%B1%BB%E5%9E%8B`)
           .then((res) => {
             this.setData({
               list: res.data.data.result,

@@ -173,3 +173,9 @@ page{
   color: #999;
   font-size: 12px;
 }
+.load-all-wrap{
+  text-align: center;
+  padding: 5px 0;
+  font-size: 14px;
+  color: #999
+}

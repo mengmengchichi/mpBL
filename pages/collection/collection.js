@@ -16,14 +16,17 @@ Page({
    */
   onLoad: function (options) {
     wx.setNavigationBarTitle({ "title": "收藏" });
-    ajax.get('https://show.bilibili.com/api/ticket/project/get?version=133&id=14505')
-      .then(res => {
-        console.log(res)
-        this.setData({
-          ...this.data,
-          collection: this.data.collection.concat(res.data.data)
+    const collection = wx.getStorageSync('collection') || [];
+    collection.forEach(item => {
+      ajax.get(`https://show.bilibili.com/api/ticket/project/get?version=133&id=${item}`)
+        .then(res => {
+          this.setData({
+            ...this.data,
+            collection: this.data.collection.concat(res.data.data)
+          })
         })
-      })
+    })
+    
   },
 
   /**

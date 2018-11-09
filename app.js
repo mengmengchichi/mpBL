@@ -1,6 +1,21 @@
 //app.js
+import store from './store/reducers/index.js';
+
 App({
+  setBadge() {
+    const list = store.getState().cart.cart;
+    const count = list.reduce((result, current) => {
+      result += current.count;
+      return result;
+    }, 0);
+    wx.setTabBarBadge({
+      index: 2,
+      text: count.toString(),
+    })
+  },
+
   onLaunch: function () {
+    this.setBadge();
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -34,6 +49,6 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: 'null'
   }
 })

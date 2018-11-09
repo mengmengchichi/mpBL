@@ -20,7 +20,6 @@ export default (state = initState, action) => {
           checked: false
         })
       }
-      console.log(newData);
       wx.setStorageSync('cart', newData);
       return Object.assign({}, state, {
         cart: newData
@@ -74,6 +73,15 @@ export default (state = initState, action) => {
         return {
           ...state,
           cart: allData
+        }
+    case "DELETE":
+        const delData = state.cart.filter(item => {
+          return item.id !== action.data.id
+        });
+        wx.setStorageSync('cart', delData);
+        return {
+          ...state,
+          cart: delData
         }
     default:
       return state;
