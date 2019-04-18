@@ -16,12 +16,12 @@
         </checkbox-group>
       </view>
       <view class='image-wrap'>
-        <image src='{{item.data.cover}}'></image>
+        <image src='{{"https://images.weserv.nl/?url=" + item.data.cover}}'></image>
       </view>
       <view class='item-info'>
         <view class='item-name'>{{item.data.name}}</view>
         <view class='item-desc'>{{item.data.venue_info.province_name}}{{item.data.venue_info.city_name}}{{item.data.venue_info.district_name}}{{item.data.venue_info.address_detail}}</view>
-        <view class='item-price'>￥{{item.data.market_price_low / 100}}</view>
+        <view class='item-price'>￥{{item.data.salable_price_low / 100 * item.count}}</view>
         <view class='change-count'>
           <text class='reduce' catchtap='reduceCount' data-id='{{item.data.id}}'>-</text>
           <text class='count'>{{item.count}}</text>

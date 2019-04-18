@@ -78,6 +78,7 @@ Page({
   },
   click(e) {
     const newScreen = this.data.detail.screen_list.map(item => {
+      debugger
       if (item.id === e.currentTarget.dataset.id) {
         item.checked = true;
       } else {

@@ -8,7 +8,7 @@
   <view class='collection-list'>
     <view class='collection-item' wx:for="{{collection}}" wx:key="item.id">
       <view class='collection-item-img'>
-        <image data-v-432cb602="" src="{{item.cover}}" alt="{{item.project_name}}">
+        <image data-v-432cb602="" src="{{'https://images.weserv.nl/?url=' +item.cover}}" alt="{{item.project_name}}">
         </image>
       </view>
       <view class='collection-item-info'>

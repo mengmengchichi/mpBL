@@ -18,6 +18,11 @@ Page({
   onLoad: function (options) {
     wx.setNavigationBarTitle({ "title": "收藏" });
     const collection = wx.getStorageSync('collection') || [];
+    if (collection.length !== 0) {
+      this.setData({
+        hasCollection: true
+      })
+    }
     collection.forEach(item => {
       ajax.get(`https://show.bilibili.com/api/ticket/project/get?version=133&id=${item}`)
         .then(res => {

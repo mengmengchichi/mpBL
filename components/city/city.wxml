@@ -4,8 +4,18 @@
     <view class='city-container'>
       <view class='all-city' catchtap='console'>全部</view>
       <view class='whole-citys'>
-        <view class="{{cityId === '-1' ? 'whole-city-item active' : 'whole-city-item'}}">全国</view>
-        <view class='whole-city-item'>海外</view>
+        <view
+        class="{{cityId === '-1' ? 'whole-city-item active' : 'whole-city-item'}}"
+        data-id="-1"
+        data-name="全国"
+        catchtap='selectCity'
+        >全国</view>
+        <view 
+        class="{{cityId === '900000' ? 'whole-city-item active' : 'whole-city-item'}}"
+        data-id='900000'
+        data-name="海外"
+        catchtap='selectCity'
+        >海外</view>
       </view>
       <view class='hot-city'>热门</view>
       <view class='hot-city-list'>

@@ -11,7 +11,7 @@
       <view class='banner-price'>
         <text class='true-price'>￥<text>{{detail.price_low / 100}}</text> - ￥<text>{{detail.price_high / 100}}</text>
         </text>
-        <text class='false-price'>￥{{detail.market_price_high / 100}}
+        <text class='false-price'>￥{{detail.salable_price_low / 100}}
         </text>
       </view>
     </view>
@@ -95,7 +95,7 @@
           catchtap='catch'
           data-id='{{item.id}}'
           >
-            ￥{{item.market_price / 100}}{{item.desc}}
+            ￥{{item.price / 100}}{{item.desc}}
           </view>
         </view>
       </view>
