@@ -5,7 +5,7 @@
 
 <scroll-view class='detail-wrap' scroll-y>
   <view class='banner-wrap'>
-    <image src='{{detail.banner}}'></image>
+    <image src="{{'https://images.weserv.nl/?url=' +detail.banner}}"></image>
     <view class='banner-info'>
       <view class='banner-name'>{{detail.name}}</view>
       <view class='banner-price'>
@@ -40,7 +40,7 @@
       <image
       wx:for="{{detail.wish_info.list}}"
       wx:key="{{item.mid}}"
-      src='{{item.face}}'
+      src='{{"https://images.weserv.nl/?url=" + item.face}}'
       ></image>
     </view>
     <view class='want-num'>等{{detail.wish_info.count}}人想去</view>

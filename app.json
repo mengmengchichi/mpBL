@@ -1,16 +1,16 @@
 {
-  "pages":[
+  "pages": [
     "pages/activity/activity",
     "pages/collection/collection",
     "pages/order/order",
     "pages/detail/detail",
     "pages/search/search"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#ff5687",
     "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"white",
+    "navigationBarTextStyle": "white",
     "enablePullDownRefresh": true
   },
   "tabBar": {
@@ -42,5 +42,6 @@
     "connectSocket": 20000,
     "uploadFile": 20000,
     "downloadFile": 20000
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

@@ -21,7 +21,7 @@ Page({
     longitude: '',
     textData: {},
     showMap: false,
-    collecting: wx.getStorageSync('collection').some(item => {
+    collecting: wx.getStorageSync('collection') && wx.getStorageSync('collection').some(item => {
       return item === wx.getStorageSync('detail')
     }) || false,
   },

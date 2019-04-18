@@ -1,5 +1,5 @@
 <!--pages/collection/collection.wxml-->
-<view class='collection-none' wx:if="{{hasCollection}}">
+<view class='collection-none' wx:if="{{!hasCollection}}">
   <view class='image-none'></view>
   <view>没有收藏内容，快去看看活动吧</view>
 </view>

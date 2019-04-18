@@ -8,7 +8,8 @@ Page({
   data: {
     collection: [],
     hasCollection: false,
-    localId: []
+    localId: [],
+    isShowCity: false
   },
 
   /**
